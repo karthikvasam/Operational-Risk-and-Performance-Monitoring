@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-03-30 23:03:59.571927",
+  "total_records": 100,
+  "checks": {
+    "null_fields": {
+      "team": 3,
+      "revenue": 5,
+      "processing_time_hrs": 2
+    },
+    "negative_revenue": 0,
+    "duplicate_orders": 0,
+    "processing_time_outliers": 2,
+    "sla_breach_pct": 15.0
+  },
+  "status": "PASSED"
+}
