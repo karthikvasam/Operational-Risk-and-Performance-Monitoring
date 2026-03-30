@@ -6,6 +6,17 @@ __pycache__/
 # C extensions
 *.so
 
+Data/Raw/
+
+# Ignore everything in Processed
+Data/Processed/*
+
+# BUT allow this file
+!Data/Processed/sample_quality_report.json
+
+Excel/
+
+
 # Distribution / packaging
 .Python
 build/
