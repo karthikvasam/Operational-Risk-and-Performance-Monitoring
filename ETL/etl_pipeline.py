@@ -61,7 +61,23 @@ print(f"Revenue anomalies flagged: {df['revenue_flag'].sum()}")
 
 # STEP 5 - Create new columns that help with analysis
 df['profit'] = df['revenue_clean'] - df['cost']
-df['profit_margin'] = (df['profit'] / df['revenue_clean'] * 100).round(2)
+# working on inf values 
+df['profit_margin'] = np.where(
+    df['revenue_clean'] == 0,
+    0,
+    (df['profit'] / df['revenue_clean'] * 100)
+)
+df.replace([np.inf, -np.inf], np.nan, inplace=True)
+df['profit_margin'] = df['profit_margin'].fillna(0)
+
+"""
+debug lines for inf values check
+print(df.isin([np.inf, -np.inf]).sum())
+print(df.columns)
+
+print(df.isin([np.inf, -np.inf]).sum())
+print(df.columns)
+"""
 
 # Extract time-based columns from date
 df['month'] = df['date'].dt.to_period('M').astype(str)
@@ -76,21 +92,7 @@ df['efficiency_score'] = (
     df['units_processed'] / df['processing_time_hrs']
 ).round(2)
 
-# working on inf values 
-df['profit_margin'] = np.where(
-    df['revenue_clean'] == 0,
-    0,
-    (df['profit'] / df['revenue_clean'] * 100)
-)
-df.replace([np.inf, -np.inf], np.nan, inplace=True)
-df['profit_margin'] = df['profit_margin'].fillna(0)
-"""
-debug lines for inf values check
-print(df.isin([np.inf, -np.inf]).sum())
-print(df.columns)
-"""
-print(df.isin([np.inf, -np.inf]).sum())
-print(df.columns)
+
 
 print(f"New columns added: profit, profit_margin, month, quarter,")
 print(f"week, is_delayed, efficiency_score")
