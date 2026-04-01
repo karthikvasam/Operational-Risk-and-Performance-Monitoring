@@ -1,1 +1,5 @@
-this is the requirements.
+```
+streamlit
+pandas
+plotly
+```
