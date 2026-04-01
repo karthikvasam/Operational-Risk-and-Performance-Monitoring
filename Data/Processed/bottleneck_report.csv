@@ -1,0 +1,31 @@
+region,team,bottleneck_orders,avg_delay_hrs,revenue_at_risk
+North,Team B,290,14.73,939801.68
+North,Team E,276,14.5,903233.78
+North,Team D,275,15.11,880045.19
+North,Team A,269,13.87,859060.64
+North,Team C,262,14.05,857437.35
+East,Team A,257,15.29,823140.9
+East,Team C,250,14.18,795762.92
+East,Team D,241,14.96,788318.94
+East,Team E,238,14.77,769433.24
+East,Team B,231,14.77,759568.64
+South,Team A,224,16.5,718212.16
+South,Team C,214,14.62,683515.66
+South,Team B,212,14.77,680634.31
+West,Team E,200,14.19,659188.63
+South,Team E,200,14.75,652169.14
+West,Team B,200,14.5,649393.2
+West,Team C,189,14.29,609314.61
+South,Team D,188,13.8,608497.9
+Central,Team B,170,15.12,556345.36
+West,Team A,169,14.59,542902.34
+West,Team D,171,13.17,538133.11
+Central,Team C,163,13.91,520139.35
+Central,Team D,157,13.95,514452.18
+Central,Team E,147,15.02,473277.82
+Central,Team A,143,14.14,457921.14
+North,Unassigned,45,15.76,138179.89
+East,Unassigned,33,13.25,109723.23
+West,Unassigned,28,19.45,90156.78
+South,Unassigned,25,14.47,82121.88
+Central,Unassigned,23,12.78,81611.14
