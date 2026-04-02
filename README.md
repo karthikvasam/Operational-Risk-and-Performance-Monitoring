@@ -24,8 +24,8 @@ Without this system:
 > "Sales dropped this month."
 
 This System helps explain:
-> "Sales dropped because Region North had a 35% processing 
-> delay. Team A has been declining for 3 consecutive months.
+> "Sales dropped because Region North had a 35% processing delay.
+> Team A has been declining for 3 consecutive months.
 > 550 high-revenue orders were flagged as anomalies.
 > ₹9.8M in revenue is stuck in operational bottlenecks."
 
@@ -173,9 +173,6 @@ Executive-level dashboard connected to MySQL Views:
 
 ## Why Two Visualization Layers?
 
-This project intentionally uses both Streamlit and Power BI
-on the same dataset — and they serve different purposes.
-
 **Streamlit (Python-built dashboard)**
 - Python Based Interactive Analysis
 
@@ -263,6 +260,4 @@ streamlit run app.py
 **Connect with me on LinkedIn:** https://www.linkedin.com/in/vasam-karthik-/
 **GitHub:** https://github.com/karthikvasam
 ```
-
----
 
