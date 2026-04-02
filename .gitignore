@@ -9,12 +9,12 @@ __pycache__/
 Data/Raw/
 
 # Ignore everything in Processed
-Data/Processed/*
+Data/Raw
 
 # BUT allow this file
-!Data/Processed/sample_quality_report.json
+!Data/Processed/
 
-Excel/
+
 
 
 # Distribution / packaging
