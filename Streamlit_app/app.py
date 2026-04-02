@@ -3,58 +3,52 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# PAGE SETUP
-# This sets the browser tab title and makes the layout wide
+
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+load_dotenv()
+import pandas as pd
+import streamlit as st
+
+
+# This is the browser title 
 st.set_page_config(page_title="Risk Intelligence System", layout="wide")
 
 st.title("Operational Performance & Risk Intelligence System")
 st.write("Detects operational problems early using data from 55,000+ records")
 
-# LOADING DATA
-# os.path.abspath(__file__) gives the full path of THIS file (app.py)
-# os.path.dirname goes one level up — from Streamlit_app folder to root
-# Then we go into Data/Processed to find the CSV files
-# This works both on your laptop AND on Streamlit Cloud
-# because we are using relative paths from this file's location
-
+# loading the data 
 this_file = os.path.abspath(__file__)
-# this_file is something like: C:/Users/.../Streamlit_app/app.py
 
 streamlit_app_folder = os.path.dirname(this_file)
-# streamlit_app_folder is: C:/Users/.../Streamlit_app
 
 root_folder = os.path.dirname(streamlit_app_folder)
-# root_folder is: C:/Users/.../Operational Risk & Performance Monitoring
 
 processed_folder = os.path.join(root_folder, 'Data', 'Processed')
-# processed_folder is: C:/Users/.../Data/Processed
 
-# Now load the 3 CSV files from that folder
+# loading the 3 CSV files from that folder
 df = pd.read_csv(os.path.join(processed_folder, 'operations_clean.csv'))
 risk_df = pd.read_csv(os.path.join(processed_folder, 'team_risk_scores.csv'))
 bt_df = pd.read_csv(os.path.join(processed_folder, 'bottleneck_report.csv'))
 
-# SIDEBAR FILTERS 
-# This lets the user narrow down the data by region and month
-# multiselect means they can pick multiple options at once
-
+# creating the sidebar filters
 st.sidebar.title("Filters")
 
 all_regions = df['region'].unique().tolist()
 selected_regions = st.sidebar.multiselect(
     "Choose Region",
     options=all_regions,
-    default=all_regions  # all regions selected by default
+    default=all_regions  
 )
 
 all_months = sorted(df['month'].unique().tolist())
 selected_months = st.sidebar.multiselect(
     "Choose Month",
     options=all_months,
-    default=all_months[-3:]  # last 3 months selected by default
+    default=all_months[-3:]  
 )
 
-# Apply both filters to the main dataframe
+# applying the filters to the main dataframe so all charts and tables respond to the sidebar selections
 filtered_df = df[
     df['region'].isin(selected_regions) &
     df['month'].isin(selected_months)
@@ -62,10 +56,7 @@ filtered_df = df[
 
 st.divider()
 
-# SECTION 1: KPI SNAPSHOT
-# These 4 numbers give a quick summary of performance
-# st.columns(4) creates 4 equal columns side by side
-
+# SECTION 1: creating kpi snapshot at the top
 st.subheader("Snapshot")
 
 c1, c2, c3, c4 = st.columns(4)
@@ -77,11 +68,7 @@ c4.metric("SLA Breaches", f"{int(filtered_df['sla_breach'].sum()):,}")
 
 st.divider()
 
-# SECTION 2: EARLY WARNING PANEL 
-# This reads the risk scores I calculated in eda_analysis.py
-# High risk teams show as red, medium as orange, low as green
-# This is the most important section — it tells you WHO is at risk
-
+# SECTION 2: creating the early warning panel with risk scores for each team 
 st.subheader("Early Warning Panel")
 
 for i, row in risk_df.iterrows():
@@ -107,17 +94,14 @@ for i, row in risk_df.iterrows():
 
 st.divider()
 
-# SECTION 3: TWO CHARTS SIDE BY SIDE
-# Left chart: which region delays the most?
-# Right chart: risk score for each team
-
+# SECTION 3: two charts side by side - delay rate by region, and risk score by team
 st.subheader("Analysis")
 
 left_col, right_col = st.columns(2)
 
 with left_col:
     st.write("Delay rate by region")
-    # Group by region and calculate average delay rate
+    # Calculating delay percentage by region
     region_delay = filtered_df.groupby('region')['is_delayed'].mean().reset_index()
     region_delay['delay_pct'] = (region_delay['is_delayed'] * 100).round(1)
     fig1 = px.bar(
@@ -132,7 +116,7 @@ with left_col:
 
 with right_col:
     st.write("Risk score by team")
-    # Sort so lowest risk is at top, highest at bottom
+    # Sort teams by risk score for better visualization
     sorted_risk = risk_df.sort_values('risk_score', ascending=True)
     fig2 = px.bar(
         sorted_risk,
@@ -151,10 +135,7 @@ with right_col:
 
 st.divider()
 
-# SECTION 4: MONTHLY REVENUE TREND
-# Shows if revenue is going up or down over time
-# Uses the filtered data so it responds to sidebar filters
-
+# SECTION 4: creating monthly revenue trend
 st.subheader("Monthly Revenue Trend")
 
 monthly = filtered_df.groupby('month')['revenue_clean'].sum().reset_index()
@@ -171,27 +152,19 @@ st.plotly_chart(fig3, use_container_width=True)
 
 st.divider()
 
-# SECTION 5: BOTTLENECK REPORT 
-# Shows which region and team has the most slow orders
-# and how much revenue is stuck because of processing delays
-
+# SECTION 5: creating bottlenec report table
 st.subheader("Bottleneck Report")
 st.write("Region and team combinations with most processing delays")
 st.dataframe(bt_df.head(10), use_container_width=True)
 
 st.divider()
 
-# SECTION 6: ANOMALY TABLE 
-# These are orders where revenue was unusually high
-# They were flagged during ETL pipeline using 99th percentile
-# revenue_flag = 1 means that order was flagged as an anomaly
-
+# SECTION 6: creating anamoly table
 st.subheader("Flagged Anomalies")
 st.write("Orders with unusually high revenue flagged during ETL pipeline")
 
 anomaly_df = filtered_df[filtered_df['revenue_flag'] == 1]
 
-# Only show these columns — keeping it clean
 cols_to_show = ['order_id', 'date', 'region', 'team',
                 'revenue', 'revenue_clean', 'status']
 
