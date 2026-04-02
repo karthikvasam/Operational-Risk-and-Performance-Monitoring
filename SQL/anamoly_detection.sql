@@ -1,7 +1,5 @@
 USE risk_monitoring;
-
 -- Query 1: Find orders where revenue is unusually high
--- I am calculating average and standard deviation for each region
 -- If an order is more than 3x the standard deviation away, it is an anomaly
 
 SELECT
@@ -19,7 +17,6 @@ WHERE revenue_clean > (
 )
 ORDER BY revenue_clean DESC;
 
-
 -- Query 2: Find orders that took too long to process
 -- Anything above 3 standard deviations from average processing time is flagged
 
@@ -36,7 +33,6 @@ WHERE processing_time_hrs > (
     FROM operations
 )
 ORDER BY processing_time_hrs DESC;
-
 
 -- Query 3: Check if any team's delay rate went up compared to last month
 -- LAG means "get the previous row's value"

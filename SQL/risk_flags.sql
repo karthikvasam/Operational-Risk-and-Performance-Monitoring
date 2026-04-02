@@ -13,8 +13,7 @@ FROM operations
 GROUP BY team, region
 ORDER BY breach_rate_pct DESC;
 
--- Query 2: Which teams are getting worse every month for 3 months?
--- This is my early warning system
+-- Query 2: Early Warning System
 -- If efficiency dropped 3 months in a row, I flag it
 
 SELECT
@@ -33,10 +32,7 @@ FROM operations
 GROUP BY team, month
 ORDER BY team, month;
 
-
 -- Query 3: Big orders that are stuck in delay
--- Not all delayed orders are equal
--- I want to find the expensive ones first
 
 SELECT
     order_id,
