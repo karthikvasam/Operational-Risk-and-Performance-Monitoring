@@ -3,14 +3,6 @@ import pandas as pd
 import plotly.express as px
 import os
 
-
-from sqlalchemy import create_engine
-from dotenv import load_dotenv
-load_dotenv()
-import pandas as pd
-import streamlit as st
-
-
 # This is the browser title 
 st.set_page_config(page_title="Risk Intelligence System", layout="wide")
 
