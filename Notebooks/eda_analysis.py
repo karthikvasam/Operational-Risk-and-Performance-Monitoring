@@ -9,14 +9,23 @@ clean_file = os.path.join(base, 'Data', 'Processed', 'operations_clean.csv')
 output_folder = os.path.join(base, 'Data', 'Processed')
 assets_folder = os.path.join(base, 'Assets')
 
+
 os.makedirs(assets_folder, exist_ok=True)
 
 df = pd.read_csv(clean_file)
 print(f"Loaded {len(df)} records")
 print(f"Columns: {list(df.columns)}")
 
+#  handiling numerical fields and infinity values 
+df['efficiency_score'] = pd.to_numeric(df['efficiency_score'], errors='coerce')
+df.replace([np.inf, -np.inf], np.nan, inplace=True)
+df['efficiency_score'] = df['efficiency_score'].fillna(df['efficiency_score'].median())
+
+# converting month to datetime for better handling in charts
+df['month_date'] = pd.to_datetime(df['month'])
+df = df.sort_values('month_date')
+
 # PART 1 - RISK SCORING
-# I want to give each team a risk score out of 100
 # The score is based on 3 things:
 # 1. How often they delay orders (worth 40 points)
 # 2. How often they breach SLA (worth 35 points)
