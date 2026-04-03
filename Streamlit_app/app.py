@@ -6,14 +6,13 @@ import os
 # This is the browser title 
 st.set_page_config(page_title="Risk Intelligence System", layout="wide")
 
-st.title("Operational Performance & Risk Intelligence System")
+st.title("Operational Risk and Performance Monitoring Dashboard")
 st.write("Detects operational problems early using data from 55,000+ records")
 
 # loading the data 
 this_file = os.path.abspath(__file__)
 
 streamlit_app_folder = os.path.dirname(this_file)
-
 root_folder = os.path.dirname(streamlit_app_folder)
 
 processed_folder = os.path.join(root_folder, 'Data', 'Processed')
@@ -34,10 +33,15 @@ selected_regions = st.sidebar.multiselect(
 )
 
 all_months = sorted(df['month'].unique().tolist())
+# Removing the last month because it is incomplete and dropping revenue drastically at end
+complete_months = all_months[:-1]
+# Picking months from middle of the dataset as default to show clean visualization when dashboard opens
+mid_point = len(complete_months) // 2
+default_months = complete_months[mid_point - 4 : mid_point + 9]
 selected_months = st.sidebar.multiselect(
     "Choose Month",
-    options=all_months,
-    default=all_months[-3:]  
+    options=complete_months,
+    default=default_months
 )
 
 # applying the filters to the main dataframe so all charts and tables respond to the sidebar selections
@@ -133,12 +137,15 @@ st.subheader("Monthly Revenue Trend")
 monthly = filtered_df.groupby('month')['revenue_clean'].sum().reset_index()
 monthly.columns = ['month', 'total_revenue']
 
+# Sort by month so the line chart goes left to right chronologically
+monthly = monthly.sort_values('month')
 fig3 = px.line(
     monthly,
     x='month',
     y='total_revenue',
     markers=True,
-    labels={'total_revenue': 'Total Revenue', 'month': 'Month'}
+    labels={'total_revenue': 'Total Revenue', 'month': 'Month'},
+    title='Monthly Revenue Trend'
 )
 st.plotly_chart(fig3, use_container_width=True)
 
