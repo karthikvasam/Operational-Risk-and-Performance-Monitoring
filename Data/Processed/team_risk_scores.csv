@@ -1,7 +1,7 @@
 team,risk_score,risk_level,delay_rate_pct,sla_breach_pct,avg_efficiency
-Team A,37.5,Medium,15.5,18.2,144.59
-Team E,37.4,Medium,15.5,17.6,147.02
-Team D,37.1,Medium,14.4,18.0,140.76
-Team B,12.4,Low,15.1,18.2,156.69
-Unassigned,12.4,Low,15.5,17.7,156.88
-Team C,12.1,Low,15.0,17.4,149.04
+Team A,37.5,Medium,15.5,18.2,144.47
+Team E,37.4,Medium,15.5,17.6,146.89
+Team D,37.1,Medium,14.4,18.0,140.65
+Team B,12.4,Low,15.1,18.2,156.52
+Unassigned,12.4,Low,15.5,17.7,156.65
+Team C,12.1,Low,15.0,17.4,148.89

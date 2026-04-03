@@ -1,4 +1,4 @@
-# Operational Performance & Risk Intelligence System
+# Operational Risk and Performance Monitoring System
 
 > I built a decision-support system that identifies where and why operations are failing before they become a business problem.
 
