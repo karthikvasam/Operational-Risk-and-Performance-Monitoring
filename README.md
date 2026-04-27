@@ -48,6 +48,20 @@ Raw Data → Data Cleaning & Transformation → SQL-Based Analysis → Business 
 
 ---
 
+## Key Results
+
+| Metric | Value |
+|--------|-------|
+| Records processed | 55,000 |
+| Anomalies detected | 550 |
+| Nulls cleaned | 4,950 |
+| Revenue at risk (bottlenecks) | ₹9.8M+ |
+| Teams flagged as medium risk | 3 |
+| SQL Views created | 5 |
+| Pipeline status | PASSED |
+
+---
+
 ## System Architecture — 8 Layers
 ```
 Raw Data Generation
@@ -157,20 +171,6 @@ Executive-level dashboard connected to MySQL Views:
 
 ---
 
-## Key Results
-
-| Metric | Value |
-|--------|-------|
-| Records processed | 55,000 |
-| Anomalies detected | 550 |
-| Nulls cleaned | 4,950 |
-| Revenue at risk (bottlenecks) | ₹9.8M+ |
-| Teams flagged as medium risk | 3 |
-| SQL Views created | 5 |
-| Pipeline status | PASSED |
-
----
-
 ## Why Two Visualization Layers?
 
 **Streamlit (Python-built dashboard)**
@@ -260,4 +260,3 @@ streamlit run app.py
 **Connect with me on LinkedIn:** https://www.linkedin.com/in/vasam-karthik-/
 **GitHub:** https://github.com/karthikvasam
 ```
-
